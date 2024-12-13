@@ -3,7 +3,7 @@ pub fn process(input: &str) -> miette::Result<String> {
     let mut res = 0;
 
     for line in input.lines() {
-        let mut original = line
+        let original = line
             .split_whitespace()
             .map(|s| s.parse::<i32>().unwrap())
             .collect::<Vec<_>>();
@@ -20,25 +20,19 @@ pub fn process(input: &str) -> miette::Result<String> {
                 }
 
                 if i == 1 {
-                    if numbers[i] < numbers[i - 1] {
-                        increasing = false;
-                    } else {
-                        increasing = true;
-                    }
+                    increasing = numbers[i] > numbers[i - 1];
                 }
 
                 if increasing {
                     if numbers[i] < numbers[i - 1] {
                         break;
                     }
-                } else {
-                    if numbers[i] > numbers[i - 1] {
-                        break;
-                    }
+                } else if numbers[i] > numbers[i - 1] {
+                    break;
                 }
 
                 let diff = (numbers[i] - numbers[i - 1]).abs();
-                if diff > 3 || diff < 1 {
+                if !(1..=3).contains(&diff) {
                     break;
                 }
 
