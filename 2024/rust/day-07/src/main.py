@@ -39,7 +39,6 @@ def traverse(elements, path, result, depth, expected):
         return None
 
     if len(path) == len(elements) - 1:
-        # print(elements, path, result)
         return result
 
     for operator in ['+', '*', "||"]:
@@ -53,17 +52,13 @@ def traverse(elements, path, result, depth, expected):
         v = traverse(elements, path, result, depth + 1, expected)
         if v == expected:
             return v
-        operator = path.pop()
+        path.pop()
         if operator == '+':
             result -= elements[depth]
         elif operator == '*':
             result //= elements[depth]
         elif operator == "||":
             result = int(str(result)[:-len(str(elements[depth]))])
-
-
-
-
 
 def process(txt):
     equations = handle_input(txt)
@@ -74,8 +69,6 @@ def process(txt):
         if traverse(elements, [], elements[0], 1, expected):
             res += expected
     print(res)
-
-
 
 import os
 # Get the directory containing the script
