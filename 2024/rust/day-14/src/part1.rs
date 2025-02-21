@@ -31,11 +31,11 @@ pub fn process(input: &str) -> miette::Result<String> {
 
         if (0..MID_ROW).contains(&y) && (0..MID_COL).contains(&x) {
             q1 += 1;
-        } else if (0..MID_ROW).contains(&y) && (MID_COL + 1..COL).contains(&x) {
+        } else if (0..MID_ROW).contains(&y) && (MID_COL..COL).contains(&x) {
             q2 += 1;
-        } else if (MID_ROW + 1..ROW).contains(&y) && (0..MID_COL).contains(&x) {
+        } else if (MID_ROW..ROW).contains(&y) && (0..MID_COL).contains(&x) {
             q3 += 1;
-        } else if (MID_ROW + 1..ROW).contains(&y) && (MID_COL + 1..COL).contains(&x) {
+        } else if (MID_ROW..ROW).contains(&y) && (MID_COL..COL).contains(&x) {
             q4 += 1;
         }
     }
