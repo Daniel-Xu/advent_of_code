@@ -2,12 +2,12 @@
 pub fn process(input: &str) -> miette::Result<String> {
     let mut robots = Robot::parse(input);
 
-    const ROW: i32 = 7;
-    const COL: i32 = 11;
+    // const ROW: i32 = 7;
+    // const COL: i32 = 11;
 
     // use this for cargo run
-    // const ROW: i32 = 103;
-    // const COL: i32 = 101;
+    const ROW: i32 = 103;
+    const COL: i32 = 101;
 
     const TIME_STEP: i32 = 100;
     const MID_ROW: i32 = ROW / 2;
@@ -31,11 +31,11 @@ pub fn process(input: &str) -> miette::Result<String> {
 
         if (0..MID_ROW).contains(&y) && (0..MID_COL).contains(&x) {
             q1 += 1;
-        } else if (0..MID_ROW).contains(&y) && (MID_COL..COL).contains(&x) {
+        } else if (0..MID_ROW).contains(&y) && (MID_COL + 1..COL).contains(&x) {
             q2 += 1;
-        } else if (MID_ROW..ROW).contains(&y) && (0..MID_COL).contains(&x) {
+        } else if (MID_ROW + 1..ROW).contains(&y) && (0..MID_COL).contains(&x) {
             q3 += 1;
-        } else if (MID_ROW..ROW).contains(&y) && (MID_COL..COL).contains(&x) {
+        } else if (MID_ROW + 1..ROW).contains(&y) && (MID_COL + 1..COL).contains(&x) {
             q4 += 1;
         }
     }
