@@ -2,16 +2,24 @@ use std::collections::HashSet;
 
 #[tracing::instrument]
 pub fn process(input: &str) -> miette::Result<String> {
+    fn convert(word: &str) -> [u8; 26] {
+        let mut res = [0; 26];
+        for b in word.bytes() {
+            let index = b - b'a';
+            res[index as usize] += 1;
+        }
+        res
+    }
+
+    let mut seen = HashSet::new();
     let res = input
         .lines()
         .filter(|line| {
-            let words = line.split_whitespace().map(|word| {
-                let mut chars = word.chars().collect::<Vec<char>>();
-                chars.sort_unstable();
-                chars.iter().collect::<String>()
-            });
-            let word_set = HashSet::<String>::from_iter(words.clone());
-            word_set.len() == words.count()
+            seen.clear();
+            line.split_whitespace().all(|word| {
+                let converted = convert(word);
+                seen.insert(converted)
+            })
         })
         .count();
 
