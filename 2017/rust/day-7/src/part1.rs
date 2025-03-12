@@ -1,4 +1,4 @@
-use miette::Result;
+use miette::{miette, Result};
 use nom::{
     bytes::complete::tag,
     character::complete::{alpha1, digit1, multispace0, space1},
@@ -46,19 +46,16 @@ pub fn process(input: &str) -> Result<String> {
         }
     }
 
-    Ok(in_degree
+    in_degree
         .iter()
-        .find_map(
-            |(&name, &degree)| {
-                if degree == 0 {
-                    Some(name)
-                } else {
-                    None
-                }
-            },
-        )
-        .unwrap()
-        .to_owned())
+        .find_map(|(&name, &degree)| {
+            if degree == 0 {
+                Some(name.to_owned())
+            } else {
+                None
+            }
+        })
+        .ok_or(miette!("cant find root"))
 }
 
 #[cfg(test)]
